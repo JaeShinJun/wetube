@@ -49,6 +49,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
         const user = await User.findOne({ email });
         if (user) {
             user.githubId = id;
+            user.avatarUrl = avatarUrl;
             user.save();
             return cb(null, user);
         }
@@ -121,7 +122,44 @@ export const userDetail = async (req, res) => {
     }
 };
 
-export const editProfile = (req, res) =>
+export const getEditProfile = (req, res) =>
     res.render('editProfile', { pageTitle: 'Edit Profile' });
-export const changePassword = (req, res) =>
-    res.render('changePassword', { pageTitle: 'Change Password' });
+
+export const postEditProifile = async (req, res) => {
+    const {
+        body: { name, email },
+        file,
+    } = req;
+
+    try {
+        await User.findByIdAndUpdate(req.user.id, {
+            name,
+            email,
+            avatarUrl: file ? file.path : req.user.avatarUrl,
+        });
+        return res.redirect(routes.me);
+    } catch (error) {
+        return res.render('editProfile', { pageTitle: 'Edit Profile' });
+    }
+};
+
+export const getChangePassword = (req, res) => {
+    return res.render('changePassword', { pageTitle: 'Change Password' });
+};
+
+export const postChangePassword = async (req, res) => {
+    const {
+        body: { oldPassword, newPassword, newPassword1 },
+    } = req;
+    try {
+        if (newPassword !== newPassword1) {
+            res.status(400);
+            return res.redirect(`/users${routes.changePassword}`);
+        }
+        await req.user.changePassword(oldPassword, newPassword);
+        return res.redirect(routes.me);
+    } catch (error) {
+        res.status(400);
+        return res.redirect(`/users${routes.changePassword}`);
+    }
+};
