@@ -20,7 +20,7 @@ const addComment = (comment) => {
 const sendComment = async (comment) => {
     const videoId = window.location.href.split('/videos/')[1];
     const response = await axios({
-        url: `/api/${videoId}/comment`,
+        url: `/api/comment/${videoId}/add`,
         method: 'POST',
         data: {
             comment,
