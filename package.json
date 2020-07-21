@@ -6,6 +6,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@babel/cli": "^7.10.5",
         "@babel/core": "^7.10.2",
         "@babel/node": "^7.10.1",
         "@babel/polyfill": "^7.10.4",
@@ -41,10 +42,15 @@
         "webpack-cli": "^3.3.12"
     },
     "scripts": {
-        "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore 'scss' --ignore 'static'",
-        "dev:assets": "cross-env WEBPACK_ENV=development webpack -w",
-        "build:assets": "cross-env WEBPACK_ENV=production webpack",
-        "tunnel": "lt -h http://serverless.social -p 4000"
+        "dev:server": "nodemon --exec babel-node src/init.js --delay 2 --ignore 'scss' --ignore 'static'",
+        "dev:assets": "cd src && cross-env WEBPACK_ENV=development webpack -w",
+        "build:assets": "cd src && cross-env WEBPACK_ENV=production webpack",
+        "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
+        "copyAll": "xcopy src\\static\\* build\\static\\ /s && xcopy src\\views\\* build\\views\\ /s",
+        "prebuild": "rd /s \"build\"",
+        "build": "npm run build:server && npm run build:assets && npm run copyAll",
+        "tunnel": "lt -h http://serverless.social -p 4000",
+        "start": "node build/init.js"
     },
     "devDependencies": {
         "cross-env": "^7.0.2",
