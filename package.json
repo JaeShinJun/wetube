@@ -50,7 +50,7 @@
         "prebuild": "rd /s \"build\"",
         "build": "npm run build:server && npm run build:assets && npm run copyAll",
         "tunnel": "lt -h http://serverless.social -p 4000",
-        "prestart": "node build/init.js",
+        "prestart": "npm run build",
         "start": "node build/init.js"
     },
     "devDependencies": {
