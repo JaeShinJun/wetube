@@ -139,10 +139,7 @@ function init() {
     volumeRange.addEventListener('input', handleDrag);
 }
 
-function loadHandle() {
-    if (videoContainer) {
-        init();
-    }
+if (videoContainer) {
+    // init();
+    document.addEventListener('DOMContentLoaded', init, false);
 }
-
-window.addEventListener('loadedmetadata', loadHandle, true);
