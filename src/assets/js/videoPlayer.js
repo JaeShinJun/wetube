@@ -99,7 +99,7 @@ async function setTotalTime() {
         );
         duration = await getBlobDuration(blob);
     }
-
+    console.log(duration, videoPlayer.duration);
     const totalTimeString = formatDate(duration);
     totalTime.innerHTML = totalTimeString;
     setInterval(getCurrentTime, 1000);
