@@ -145,4 +145,4 @@ function loadHandle() {
     }
 }
 
-window.addEventListener('load', loadHandle);
+window.addEventListener('loadedmetadata', loadHandle, true);
