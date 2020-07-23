@@ -139,6 +139,10 @@ function init() {
     volumeRange.addEventListener('input', handleDrag);
 }
 
-if (videoContainer) {
-    init();
+function loadHandle() {
+    if (videoContainer) {
+        init();
+    }
 }
+
+window.addEventListener('load', loadHandle);
