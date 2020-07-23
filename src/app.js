@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import path from 'path';
 import flash from 'express-flash';
+import cors from 'cors';
 import MongoStore from 'connect-mongo';
 import { localsMiddleware } from './middlewares';
 import routes from './routes';
@@ -24,7 +25,7 @@ const CookieStore = MongoStore(session);
 app.use(helmet());
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-console.log(__dirname);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // app.use('/uploads', express.static('uploads'));
 // app.use('/static', express.static('static'));
 app.use('/static', express.static(path.join(__dirname, 'static')));
@@ -43,6 +44,7 @@ app.use(
     })
 );
 app.use(flash());
+app.use(cors());
 
 app.use(passport.initialize());
 app.use(passport.session());
