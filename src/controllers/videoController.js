@@ -16,6 +16,12 @@ export const search = async (req, res) => {
     const {
         query: { term: searchingBy },
     } = req;
+
+    if (!searchingBy || searchingBy.length < 1) {
+        req.flash('info', 'You have to search with at least one word');
+        return res.redirect(routes.home);
+    }
+
     let videos = [];
     try {
         videos = await Video.find({
