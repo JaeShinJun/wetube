@@ -129,7 +129,6 @@ function handleDrag(event) {
 }
 
 function init() {
-    console.log('WWWW');
     videoPlayer.volume = 0.5;
     playBtn.addEventListener('click', handlePlayClick);
     volumeBtn.addEventListener('click', handleVolumnClick);
